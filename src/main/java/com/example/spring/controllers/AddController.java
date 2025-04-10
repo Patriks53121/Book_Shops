@@ -1,6 +1,8 @@
 package com.example.spring.controllers;
 
 import com.example.spring.models.Book;
+import com.example.spring.services.classes.BookService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +15,9 @@ import java.util.ArrayList;
 @Controller
 public class AddController {
 
+    private BookService bookService;
     public static ArrayList<Book> books = new ArrayList<>();
+
 
     @GetMapping("/add")
     public String getAdd() {
@@ -33,13 +37,27 @@ public class AddController {
 
         if (!file.isEmpty()) {
             imagePath = uploadImage(file, title, part);
-            book = new Book(title, author, part, price, imagePath);
-            books.add(book);
+            book = new Book();
+            book.setTitle(title);
+            book.setAuthor_name(author);
+            book.setPart(part);
+            book.setBook_price(price);
+            book.setImage(imagePath);
+
+            bookService.createBook(book);
+
             System.out.println("Book added with image ");
         }
         else{
-            book = new Book(title, author, part, price, imagePath);
-            books.add(book);
+            book = new Book();
+            book.setTitle(title);
+            book.setAuthor_name(author);
+            book.setPart(part);
+            book.setBook_price(price);
+            book.setImage(imagePath);
+
+            bookService.createBook(book);
+
             System.out.println("Book added without image");
         }
 
