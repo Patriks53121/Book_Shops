@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="lv" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change</title>
+  <link href="/css/changes.css" rel="stylesheet">
+</head>
+<body>
+<h1>Change book</h1>
+
+<div class="text-areas">
+  <h2 style="color: #8f6a3c">Change book</h2>
+  <form th:action="@{'/change/' + ${book.title}}" method="post" enctype="multipart/form-data" th:object="${book}">
+
+    <!-- Hidden field to store original title -->
+    <input type="hidden" name="originalTitle" th:value="${book.title}"/>
+
+    <div style="padding: 5px;">
+      <label for="addTitle" class="txtFieldL" style="position: relative; right: 50px;">Book title</label><br>
+      <input type="text" name="title" id="addTitle" class="txtField" th:value="${book.title}">
+    </div>
+    <div style="padding: 5px;">
+      <label for="addAuthor" class="txtFieldL" style="position: relative; right: 40px;">Book author</label><br>
+      <input type="text" name="author" id="addAuthor" class="txtField" th:value="${book.author_name}">
+    </div>
+    <div style="padding: 5px;">
+      <label for="addPart" class="txtFieldL" style="position: relative; right: 50px;">Book part</label><br>
+      <input type="number" name="part" id="addPart" class="txtField" th:value="${book.part}">
+    </div>
+    <div style="padding: 5px;">
+      <label for="addPrice" class="txtFieldL" style="position: relative; right: 46px;">Book price</label><br>
+      <input type="number" step="0.01" name="price" id="addPrice" class="txtField" th:value="${book.book_price}">
+    </div>
+    <div style="padding: 5px;">
+      <label for="file-upload" class="file-upload">Choose an Image</label>
+      <input id="file-upload" type="file" name="image" accept="image/*">
+    </div>
+    <button type="submit" value="submit">Submit</button>
+  </form>
+</div>
+
+<nav class="buttons">
+  <a href="/" class="button">🏠 Sākums</a>
+  <a href="/catalog" class="button">📖 Katalogs</a>
+  <a href="/cart" class="button">🛒 Grozs</a>
+  <a href="/add" class="button">➕ Pievienot</a>
+  <a href="/delete" class="button">➖ Izdzēst</a>
+  <a href="/change" class="button">✍️ Mainīt</a>
+</nav>
+</body>
+</html>

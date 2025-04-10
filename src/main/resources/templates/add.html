@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html lang="lv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>addBook</title>
+    <link href="/css/add.css" rel="stylesheet">
+</head>
+<body>
+<h1>Add book to store</h1>
+
+<div class="textAreas">
+    <h2 style="color: #8f6a3c">Add book</h2>
+    <form th:action="@{/addBook}" method="post" enctype="multipart/form-data" th:object="${book}">
+    <div style="padding: 5px;">
+        <label for="addTitle" class="txtFieldL" style="position: relative; right: 50px;">Book title</label><br>
+        <input type="text" name="title" id="addTitle" class="txtField" required>
+    </div>
+    <div style="padding: 5px;">
+        <label for="addAuthor" class="txtFieldL" style="position: relative; right: 40px;">Book author</label><br>
+        <input type="text" name="author" id="addAuthor" class="txtField" required>
+    </div>
+    <div style="padding: 5px;">
+        <label for="addPart" class="txtFieldL" style="position: relative; right: 50px;">Book part</label><br>
+        <input type="number" name="part" id="addPart" class="txtField" required>
+    </div>
+    <div style="padding: 5px;">
+        <label for="addPrice" class="txtFieldL" style="position: relative; right: 46px;">Book price</label><br>
+        <input type="number" name="price" id="addPrice" class="txtField" required>
+    </div>
+        <div style="padding: 5px;">
+            <label for="file-upload" class="file-upload">Choose an Image</label>
+            <input id="file-upload" type="file" name="image" accept="image/*">
+        </div>
+        <button type="submit" value="submit">Submit</button>
+    </form>
+</div>
+
+<nav class="buttons">
+    <a href="/" class="button">🏠 Sākums</a>
+    <a href="/catalog" class="button">📖 Katalogs</a>
+    <a href="/cart" class="button">🛒 Grozs</a>
+    <a href="/add" class="button">➕ Pievienot</a>
+    <a href="/delete" class="button">➖ Izdzēst</a>
+    <a href="/change" class="button">✍️ Mainīt</a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="lv" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change</title>
+  <link  href="/css/change.css" rel="stylesheet">
+</head>
+<body>
+<nav class="buttons">
+  <a href="/" class="button">🏠 Sākums</a>
+  <a href="/catalog" class="button">📖 Katalogs</a>
+  <a href="/cart" class="button">🛒 Grozs</a>
+  <a href="/add" class="button">➕ Pievienot</a>
+  <a href="/delete" class="button">➖ Izdzēst</a>
+  <a href="/change" class="button">✍️ Mainīt</a>
+</nav>
+<br>
+<section class="book-gallery">
+  <div th:each="book : ${books}" class="book-card">
+    <img th:src="${book.image}" alt="Book Image" class="book-image">
+    <div class="book-info">
+      <h2 th:text="${book.title}"></h2>
+      <p><strong>Autors:</strong> <span th:text="${book.author_name}"></span></p>
+      <p><strong>Daļa:</strong> <span th:text="${book.part}"></span></p>
+      <p><strong>Cena:</strong> <span th:text="${book.book_price}"></span>$</p>
+    </div>
+    <form th:action="@{'/change/' + ${book.title}}" method="get" style="margin-top: 10px;">
+      <input type="hidden" name="title" th:value="${book.title}" />
+      <button type="submit" class="button-change">Mainīt</button>
+    </form>
+  </div>
+</section>
+
+
+</body>
+</html>
