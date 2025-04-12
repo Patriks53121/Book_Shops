@@ -36,6 +36,7 @@
       <label for="file-upload" class="file-upload">Choose an Image</label>
       <input id="file-upload" type="file" name="image" accept="image/*">
     </div>
+    <input type="hidden" name="id" th:value="${book.id}" />
     <button type="submit" value="submit">Submit</button>
   </form>
 </div>

@@ -8,13 +8,13 @@ public interface BookInterface {
 
     Book createBook(Book book);
 
-    List<Book> getAllBook(Book book);
+    List<Book> getAllBook();
 
     Book getBookById(int bookId);
 
     Book updateBook(Book book);
 
-    void deleteBook(int bookId);
+    void deleteById(int id);
 
 
 }

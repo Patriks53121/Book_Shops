@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "books")
 public class Book {
 
 	@Id
@@ -30,8 +31,8 @@ public class Book {
 	@Column(name="image")
 	private String image;
 
-	@ManyToOne
-	@JoinColumn(name = "shop_id", referencedColumnName = "id")
-	private Shop shop = null;
+//	@ManyToOne
+//	@JoinColumn(name = "shop_id", referencedColumnName = "id")
+//	private Shop shop = null;
 
 }

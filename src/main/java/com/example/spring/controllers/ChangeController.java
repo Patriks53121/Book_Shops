@@ -1,6 +1,8 @@
 package com.example.spring.controllers;
 
 import com.example.spring.models.Book;
+import com.example.spring.repositories.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,25 +11,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.spring.services.classes.BookService;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ChangeController {
 
+    @Autowired
+    private BookRepository bookRepo;
+
+    @Autowired
+    private BookService bookService;
+
     @GetMapping("/change")
     public String getChange(Model model) {
-        model.addAttribute("books", AddController.books);
+        model.addAttribute("books", bookRepo.findAll());
         return "change";
     }
 
     @GetMapping("/change/{title}")
     public String setChanges(@PathVariable String title, Model model) {
-        for (Book book : AddController.books) {
+        for (Book book : bookRepo.findAll()) {
             if (book.getTitle().equals(title)) {
                 model.addAttribute("book", book);
                 return "changes";
@@ -44,29 +55,23 @@ public class ChangeController {
                                @RequestParam("author") String author,
                                @RequestParam("part") int part,
                                @RequestParam("price") float price,
-                               @RequestParam("image") MultipartFile file) {
+                               @RequestParam("image") MultipartFile file,
+                               @RequestParam("id") int id) {
 
-        ArrayList<Book> books = AddController.books;
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getTitle().equals(originalTitle)) {
-                if (!newTitle.isEmpty()) {
-                    books.get(i).setTitle(newTitle);
+        String imagePath = "/uploads/default.jpg";
+        List<Book> books = bookRepo.findAll();
+        for (Book book : books) {
+            if(book.getId() == id){
+                if(!file.isEmpty()){
+                    imagePath = uploadImage(file, newTitle, part);
+                    System.out.println("Book added with image ");
                 }
-                if (!author.isEmpty()) {
-                    books.get(i).setAuthor_name(author);
-                }
-                if (part != 0) {
-                    books.get(i).setPart(part);
-                }
-                if (price != 0) {
-                    books.get(i).setBook_price(price);
-                }
-                if (!file.isEmpty()) {
-                    String imagePath = uploadImage(file, newTitle, part);
-                    books.get(i).setImage(imagePath);
-                }
-
-                AddController.books = books;
+                book.setTitle(newTitle);
+                book.setAuthor_name(author);
+                book.setPart(part);
+                book.setBook_price(price);
+                book.setImage(imagePath);
+                bookService.updateBook(book);
                 return "redirect:/change";
             }
         }
@@ -75,9 +80,7 @@ public class ChangeController {
     }
 
 
-
     public String uploadImage(MultipartFile file, String title, int part) {
-        ArrayList<Book> books = AddController.books;
 
         if (file.isEmpty()) {
             return "/uploads/default.jpg";

@@ -31,7 +31,7 @@
     <p><strong>Cena:</strong> <span th:text="${book.book_price}"></span>$</p>
   </div>
     <form th:action="@{'/deleteBook'}" method="post" style="margin-top: 10px;">
-      <input type="hidden" name="title" th:value="${book.title}" />
+      <input type="hidden" name="id" th:value="${book.id}" />
       <button type="submit" class="btn-delete">Dzēst</button>
     </form>
 </div>

@@ -21,19 +21,19 @@ public class BookService implements BookInterface {
     }
 
     @Override
-    public List<Book> getAllBook(Book book) {
+    public List<Book> getAllBook() {
         return bookRepo.findAll();
     }
 
     @Override
     public Book getBookById(int bookId) {
         Optional<Book> optionalBook = bookRepo.findById(bookId);
-        return optionalBook.get();
+        return optionalBook.orElse(null);
     }
 
     @Override
     public Book updateBook(Book book) {
-        Book existingBook = bookRepo.findById(book.getId()).get();
+        Book existingBook = bookRepo.findById(book.getId()).orElseThrow(() -> new RuntimeException("Book not found with id: " + book.getId()));
         existingBook.setTitle(book.getTitle());
         existingBook.setAuthor_name(book.getAuthor_name());
         existingBook.setPart(book.getPart());
@@ -43,7 +43,8 @@ public class BookService implements BookInterface {
     }
 
     @Override
-    public void deleteBook(int bookId) {
-        bookRepo.deleteById(bookId);
+    public void deleteById(int id) {
+        bookRepo.deleteById(id);
     }
+
 }
