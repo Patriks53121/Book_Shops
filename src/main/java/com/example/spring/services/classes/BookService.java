@@ -16,22 +16,6 @@ public class BookService implements BookInterface {
     private BookRepository bookRepo;
 
     @Override
-    public Book createBook(Book book) {
-        return bookRepo.save(book);
-    }
-
-    @Override
-    public List<Book> getAllBook() {
-        return bookRepo.findAll();
-    }
-
-    @Override
-    public Book getBookById(int bookId) {
-        Optional<Book> optionalBook = bookRepo.findById(bookId);
-        return optionalBook.orElse(null);
-    }
-
-    @Override
     public Book updateBook(Book book) {
         Book existingBook = bookRepo.findById(book.getId()).orElseThrow(() -> new RuntimeException("Book not found with id: " + book.getId()));
         existingBook.setTitle(book.getTitle());
@@ -40,11 +24,6 @@ public class BookService implements BookInterface {
         existingBook.setBook_price(book.getBook_price());
         existingBook.setImage(book.getImage());
         return bookRepo.save(existingBook);
-    }
-
-    @Override
-    public void deleteById(int id) {
-        bookRepo.deleteById(id);
     }
 
 }
