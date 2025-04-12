@@ -1,6 +1,7 @@
 package com.example.spring.controllers;
 
 import com.example.spring.models.Book;
+import com.example.spring.repositories.BookRepository;
 import com.example.spring.services.classes.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public class AddController {
 
     @Autowired
-    private BookService bookService;
+    private BookRepository bookRepo;
 
     public static ArrayList<Book> books = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class AddController {
         book.setBook_price(price);
         book.setImage(imagePath);
 
-        bookService.createBook(book);
+        bookRepo.save(book);
 
         return "redirect:/add";
     }

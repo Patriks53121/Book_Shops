@@ -15,7 +15,6 @@
 <nav class="buttons">
     <a href="/" class="button">🏠 Sākums</a>
     <a href="/catalog" class="button">📖 Katalogs</a>
-    <a href="/cart" class="button">🛒 Grozs</a>
     <a href="/add" class="button">➕ Pievienot</a>
     <a href="/delete" class="button">➖ Izdzēst</a>
     <a href="/change" class="button">✍️ Mainīt</a>
@@ -23,7 +22,7 @@
 <br>
 <section class="book-gallery">
     <div th:each="book : ${books}" class="book-card">
-        <img th:src="${book.image}" th:alt="'Attēls: ' + ${book.title}" class="book-image">
+        <img th:src="${book.image != null ? book.image : '/uploads/default.jpg'}" alt="Error" class="book-image">
         <div class="book-info">
             <h2 th:text="${book.title}"></h2>
             <p><strong>Autors:</strong> <span th:text="${book.author_name}"></span></p>
